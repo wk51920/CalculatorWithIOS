@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NormalCalculatorViewController.h"
+#import "ScientificCalculatorViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <NormalCalculatorPassValueDelegate, ScientificCalculatorPassValueDelegate>
 
 
 @end

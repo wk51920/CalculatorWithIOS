@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED7294631B043DAD009D8A2C /* NormalCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7294621B043DAD009D8A2C /* NormalCalculatorViewController.m */; };
+		ED7294661B044604009D8A2C /* ScientificCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7294651B044604009D8A2C /* ScientificCalculatorViewController.m */; };
 		ED9C9C0B1AFA616E009BAF7D /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = ED9C9C0A1AFA616E009BAF7D /* Stack.m */; };
 		ED9D6E3E1AEE5A0900BB1E14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ED9D6E3D1AEE5A0900BB1E14 /* main.m */; };
 		ED9D6E411AEE5A0900BB1E14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED9D6E401AEE5A0900BB1E14 /* AppDelegate.m */; };
@@ -28,6 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED7294611B043DAD009D8A2C /* NormalCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalCalculatorViewController.h; sourceTree = "<group>"; };
+		ED7294621B043DAD009D8A2C /* NormalCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalCalculatorViewController.m; sourceTree = "<group>"; };
+		ED7294641B044604009D8A2C /* ScientificCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScientificCalculatorViewController.h; sourceTree = "<group>"; };
+		ED7294651B044604009D8A2C /* ScientificCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScientificCalculatorViewController.m; sourceTree = "<group>"; };
 		ED9C9C091AFA616E009BAF7D /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		ED9C9C0A1AFA616E009BAF7D /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
 		ED9C9C0C1AFAF81E009BAF7D /* stackC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stackC.h; sourceTree = "<group>"; };
@@ -89,9 +95,13 @@
 				ED9D6E401AEE5A0900BB1E14 /* AppDelegate.m */,
 				ED9D6E421AEE5A0900BB1E14 /* ViewController.h */,
 				ED9D6E431AEE5A0900BB1E14 /* ViewController.m */,
+				ED7294641B044604009D8A2C /* ScientificCalculatorViewController.h */,
+				ED7294651B044604009D8A2C /* ScientificCalculatorViewController.m */,
 				ED9C9C091AFA616E009BAF7D /* Stack.h */,
 				ED9C9C0A1AFA616E009BAF7D /* Stack.m */,
 				ED9D6E451AEE5A0900BB1E14 /* Main.storyboard */,
+				ED7294611B043DAD009D8A2C /* NormalCalculatorViewController.h */,
+				ED7294621B043DAD009D8A2C /* NormalCalculatorViewController.m */,
 				ED9D6E481AEE5A0900BB1E14 /* Images.xcassets */,
 				ED9D6E4A1AEE5A0900BB1E14 /* LaunchScreen.xib */,
 				ED9D6E3B1AEE5A0900BB1E14 /* Supporting Files */,
@@ -227,8 +237,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED9C9C0B1AFA616E009BAF7D /* Stack.m in Sources */,
+				ED7294661B044604009D8A2C /* ScientificCalculatorViewController.m in Sources */,
 				ED9D6E441AEE5A0900BB1E14 /* ViewController.m in Sources */,
 				ED9D6E411AEE5A0900BB1E14 /* AppDelegate.m in Sources */,
+				ED7294631B043DAD009D8A2C /* NormalCalculatorViewController.m in Sources */,
 				ED9D6E3E1AEE5A0900BB1E14 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

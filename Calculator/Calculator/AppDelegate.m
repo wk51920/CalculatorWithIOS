@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+//在此处定义的变量，全局可用
 @interface AppDelegate ()
 
 @end
