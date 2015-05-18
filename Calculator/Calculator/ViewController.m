@@ -106,7 +106,6 @@ typedef double numbType;
 #pragma mark - NormalCalculator Delegate Methods
 
 -(void)normalPassEquationValue:(NSString *)value{
-    NSLog(@"%@",value);
     self.equationLabel.text  = value;
 }
 

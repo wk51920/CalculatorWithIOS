@@ -21,7 +21,7 @@
     numbType number; //用于将结果存储为一个真实的值
     Stack *stack;    //用于计算的栈
     char operation;  //用于记录上一个运算符是什么
-    BOOL singlePush; //在一元计算中标示压入一个输入值（YES）还是压入一个默认值0（NO）
+    BOOL singlePush; //用于判断是否在等于号之后又重新输入了数字
 }
 
 -(void)viewDidLoad{
@@ -118,12 +118,27 @@
                     [stack push:0];
                 operation = 'r';
             }else{
-                if(operation == 'n')
+                if(operation !='n')
+                {
+                    temp = [stack pop];
+                    temp = [self operation:operation num:temp];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }else if(operation == 'n')
+                {
                     operation = 'r';
-                temp = [stack pop];
-                temp = [self operation:operation num:temp];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    if(singlePush)
+                    {
+                        temp = [self operation:operation num:number];
+                    }else{
+                        temp = [stack pop];
+                        temp = [self operation:operation num:temp];
+                        
+                    }
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }
+                
                 [stack push:temp];
+                 operation = 'n';
             }
             break;
             
@@ -135,13 +150,25 @@
                     break; //非法，0不能做分母
                 operation = 'd';
             }else{
-                if(operation == 'n')
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self operation:operation num:temp];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }else if(operation == 'n'){
                     operation = 'd';
-                temp = [stack pop];
-                temp = [self operation:operation num:temp];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    if(singlePush){
+                        temp = [self operation:operation num:number];
+                    }else{
+                        temp  = [stack pop];
+                        temp = [self operation:operation num:temp];
+                    }
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }
+                
                 [stack push:temp];
+                operation = 'n';
             }
+            
             break;
             
         case 1015: // /
@@ -149,14 +176,24 @@
                 [stack push:number];
                 operation = '/';
             }else{
-                if(operation == 'n'){
-                    operation = '/';
-                    number = 1;  //同理乘法运算
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self opeartion:operation firstNum:temp secondNum:number];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    [stack push: temp];
+                }else if(operation == 'n'){
+                    if(!singlePush){  //按等号后，用到上次结果
+                        temp = [stack pop];
+                        operation = '/';
+                        number = 1;
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [stack push:temp];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    }else { //按了等号后重新计算
+                        [stack push:number];
+                        operation = '/';
+                    }
                 }
-                temp = [stack pop];
-                temp = [self opeartion:operation firstNum:temp secondNum:number];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
-                [stack push:temp];
             }
             
             break;
@@ -166,14 +203,25 @@
                 [stack push:number];
                 operation = '%';
             }else{
-                if(operation == 'n')
-                    operation = '%';
-                temp = [stack pop];
-                temp = [self opeartion:operation firstNum:temp secondNum:number];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
-                [stack push:temp];
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self opeartion:operation firstNum:temp secondNum:number];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    [stack push:temp];
+                }else if(operation == 'n'){
+                    if(!singlePush){
+                        temp = [stack pop];
+                        operation = '%';
+                        number = 0;
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [stack push:temp];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    }else{
+                        [stack push:number];
+                        operation = '%';
+                    }
+                }
             }
-            
             break;
             
         case 1017: // *
@@ -181,17 +229,27 @@
                 [stack push:number];
                 operation = '*';
             }else{
-                if(operation == 'n'){
-                    operation = '*';
-                    number = 1;  //由于在乘法运算中如果使用默认值0，则会使得相乘的值变为0，因此不同于加减法运算
+                if(operation != 'n'){
+                        temp = [stack pop];
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                        [stack push:temp];
+                }else if(operation == 'n'){
+                    if(!singlePush){
+                        temp = [stack pop];
+                        operation = '*';
+                        number = 1;
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [stack push:temp];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    }else{
+                        [stack push:number];
+                        operation = '*';
+                    }
                 }
-                temp = [stack pop];
-                temp = [self opeartion:operation firstNum:temp secondNum:number];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
-                [stack push:temp];
             }
             break;
-            
+                
         case 1018: // 根号
             if([stack isEmpty]){
                 if(singlePush)
@@ -200,14 +258,23 @@
                     [stack push:0];
                 operation = 'g';
             }else{
-                if(operation == 'n')
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self operation:operation num:temp];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }else if(operation == 'n'){
                     operation = 'g';
-                temp = [stack pop];
-                temp = [self operation:operation num:temp];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    if(singlePush){
+                        temp = [self operation:operation num:number];
+                    }else{
+                        temp  = [stack pop];
+                        temp = [self operation:operation num:temp];
+                    }
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                }
                 [stack push:temp];
+                operation = 'n';
             }
-            
             break;
             
         case 1019: // -
@@ -257,6 +324,7 @@
         default:
             break;
     }
+    singlePush = NO;
     [self.delegate normalPassEquationValue:@"0"];
     
 }
