@@ -282,13 +282,24 @@
                 [stack push:number];
                 operation = '-';
             }else{
-                if(operation == 'n')
-                    operation = '-';
-                
-                temp = [stack pop];
-                temp = [self opeartion:operation firstNum:temp secondNum:number];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
-                [stack push:temp];
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self opeartion:operation firstNum:temp secondNum:number];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    [stack push:temp];
+                }else if(operation == 'n'){
+                    if(!singlePush){
+                        temp = [stack pop];
+                        operation = '-';
+                        number = 0;
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [stack push:temp];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    }else{
+                        [stack push:number];
+                        operation = '-';
+                    }
+                }
             }
             
             break;
@@ -298,12 +309,24 @@
                 [stack push:number]; //第一次压栈只压栈不计算
                 operation = '+';     //记录第一次运算的运算符
             }else{
-                if(operation == 'n')
-                    operation = '+';
-                temp = [stack pop];
-                temp = [self opeartion:operation firstNum:temp secondNum:number];
-                [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
-                [stack push:temp];
+                if(operation != 'n'){
+                    temp = [stack pop];
+                    temp = [self opeartion:operation firstNum:temp secondNum:number];
+                    [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    [stack push:temp];
+                }else if(operation == 'n'){
+                    if(!singlePush){
+                        temp = [stack pop];
+                        operation = '+';
+                        number = 0;
+                        temp = [self opeartion:operation firstNum:temp secondNum:number];
+                        [stack push:temp];
+                        [self.delegate normalPassResultValue:[NSString stringWithFormat:@"%f", temp]];
+                    }else{
+                        [stack push:number];
+                        operation = '+';
+                    }
+                }
             }
             break;
             
